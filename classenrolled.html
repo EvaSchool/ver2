@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Class Enrolled Students</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <script defer src="script.js"></script>
+  <style>
+    /* 表格滚动容器 */
+    .table-scroll-container {
+      overflow-x: auto;
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: white;
+    }
+
+    /* 确保表格最小宽度 */
+    .student-table {
+      min-width: 1200px;
+      white-space: nowrap;
+    }
+
+    /* 滚动条样式 */
+    .table-scroll-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .table-scroll-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    .table-scroll-container::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 4px;
+    }
+
+    .table-scroll-container::-webkit-scrollbar-thumb:hover {
+      background: #a8a8a8;
+    }
+
+    /* 固定表格列宽度以防止内容挤压 */
+    .student-table th,
+    .student-table td {
+      min-width: 100px;
+      padding: 12px 8px;
+    }
+
+    .student-table th:first-child,
+    .student-table td:first-child {
+      min-width: 150px; /* Name */
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="sidebar-logo">
+      <img src="logo.png" alt="Logo"/>
+      <h1>Emerald Valley Academy</h1>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html"><i class="fa fa-house"></i> Dashboard</a>
+      <a href="studentmain.html"><i class="fa fa-user-graduate"></i> Students</a>
+      <a href="classmain.html" class="active"><i class="fa fa-chalkboard-teacher"></i> Classes</a>
+      <a href="filesmain.html"><i class="fa fa-folder-open"></i> Files</a>
+      <a href="settings.html"><i class="fa fa-gear"></i> Settings</a>
+    </nav>
+  </aside>
+ 
+  <!-- Main Area -->
+  <div class="main-area">
+    <header class="top-bar">
+      <h2><span id="class-name-title">Loading Class Enrolled Students...</span></h2>
+      <div class="button-group">
+        <a href="addstudents.html" class="btn">Add Students</a>
+      </div>
+    </header>
+ 
+    <main class="main-content">
+        <div class="search-bar">
+            <label>Add filter</label>
+            <input type="text" placeholder="Search for a student" />
+        </div>
+
+      <!-- Enrolled Students Table -->
+      <section class="enrolled-students">
+        <div class="table-scroll-container">
+          <table class="student-table">
+            <thead>
+              <tr>
+                <th id="name-header">Name <i class="fa fa-sort"></i></th>
+                <th id="status-header">Status <i class="fa fa-sort"></i></th>
+                <th id="enrollment-header">Course Enrollment Date <i class="fa fa-sort"></i></th>
+                <th id="finish-header">Course Finish Date <i class="fa fa-sort"></i></th>
+                <th id="midterm-header">Midterm Grade <i class="fa fa-sort"></i></th>
+                <th id="final-header">Final Grade <i class="fa fa-sort"></i></th>
+                <th>Midterm RC</th>
+                <th>Final RC</th>
+                <th>Edit</th> 
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="enrolled-table-body">
+              <!-- Dynamic student rows will go here -->
+            </tbody>
+          </table>
+        </div>
+        <br><br>
+
+        <!-- Hidden Student Entry Table (shown after clicking "Add Student") -->
+        <div id="manual-student-container" style="display: none;">
+          <div class="table-scroll-container">
+            <table class="student-table">
+              <thead id="manual-student-head">
+                <!-- 表头将通过 script.js 动态添加 -->
+              </thead>
+              <tbody id="manual-student-body">
+                <!-- 新增学生行将插入这里 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <br><br>
+        <!-- View Mode Controls -->
+        <div id="view-mode-controls" style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
+          <div class="go-back-section">
+            <button class="btn secondary" onclick="window.history.back()">
+              <i class="fa fa-arrow-left"></i> Go Back
+            </button>
+          </div>
+
+        </div>
+      </section>
+ 
+    </main>
+  </div>
+  
+  <!-- Add Student Modal (hidden by default) -->
+  <div id="add-student-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add New Student</h3>
+        <button class="modal-close" id="close-add-student-modal">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="add-student-form">
+          <div class="form-group">
+            <label for="new-student-name">Name:</label>
+            <input type="text" id="new-student-name" required />
+          </div>
+
+          <div class="form-group">
+            <label for="new-course-status">Course Status:</label>
+                <select id="new-course-status">
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Withdrawn">Withdrawn</option>
+                </select>
+          </div>
+          <div class="form-group">
+            <label for="new-enrollment-date">Course Enrollment Date:</label>
+            <input type="date" id="new-enrollment-date" />
+          </div>
+          <div class="form-group">
+            <label for="new-finish-date">Course Finish Date:</label>
+            <input type="date" id="new-finish-date" />
+          </div>
+          <div class="form-group">
+            <label for="new-midterm-grade">Midterm Grade:</label>
+            <input type="text" id="new-midterm-grade" />
+          </div>
+          <div class="form-group">
+            <label for="new-final-grade">Final Grade:</label>
+            <input type="text" id="new-final-grade" />
+          </div>
+          <div class="form-group">
+            <label for="new-midterm-rc">Midterm RC:</label>
+            <input type="file" id="new-midterm-rc" accept=".pdf,.doc,.docx" />
+          </div>
+          <div class="form-group">
+            <label for="new-final-rc">Final RC:</label>
+            <input type="file" id="new-final-rc" accept=".pdf,.doc,.docx" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="save-new-student" class="btn">Add Student</button>
+        <button type="button" id="cancel-new-student" class="btn secondary">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

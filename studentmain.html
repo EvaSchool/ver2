@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Students</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="sidebar-logo">
+      <img src="logo.png" alt="Logo" />
+      <h1>Emerald Valley Academy</h1>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html"><i class="fa fa-house"></i> Dashboard</a>
+      <a href="studentmain.html" class="active"><i class="fa fa-user-graduate"></i> Students</a>
+      <a href="classmain.html"><i class="fa fa-chalkboard-teacher"></i> Classes</a>
+      <a href="filesmain.html"><i class="fa fa-folder-open"></i> Files</a>
+      <a href="settings.html"><i class="fa fa-gear"></i> Settings</a>
+    </nav>
+  </aside>
+ 
+  <!-- Main Content Area -->
+  <div class="main-area">
+    <!-- Top Bar -->
+    <header class="top-bar">
+      <h2>Students</h2>
+      <div class="button-group">
+        <a href="addstudents.html" class="btn">Add Students</a>
+      </div>
+    </header>
+ 
+    <main class="main-content">
+      <div class="search-bar">
+        <label>Add filter</label>
+        <input type="text" id="student-search" placeholder="Search for a student" />
+      </div>
+ 
+      <div id="student-table-container">
+        <table class="student-table">
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              <th>OEN</th>
+              <th>Date of Birth</th>
+              <th>Enrollment Date</th>
+              <th>Graduation Date</th>
+            </tr>
+          </thead>
+          <tbody id="student-table-body">
+            <!-- Data will be inserted here -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

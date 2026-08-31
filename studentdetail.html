@@ -1,0 +1,174 @@
+<!DOCTYPE html> 
+<html lang="en">  
+<head>   
+  <meta charset="UTF-8" />   
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />   
+  <title>Student Detail</title>   
+  <link rel="stylesheet" href="style.css" />   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />   
+  <script defer src="script.js"></script> 
+</head>  
+
+<body>   
+  <!-- Sidebar -->   
+  <aside id="sidebar">     
+    <div class="sidebar-logo">       
+      <img src="logo.png" alt="Logo" />       
+      <h1>Emerald Valley Academy</h1>     
+    </div>     
+    <nav class="sidebar-nav">       
+      <a href="dashboard.html"><i class="fa fa-house"></i> Dashboard</a>       
+      <a href="studentmain.html" class="active"><i class="fa fa-user-graduate"></i> Students</a>
+      <a href="classmain.html"><i class="fa fa-chalkboard-teacher"></i> Classes</a>       
+      <a href="filesmain.html"><i class="fa fa-folder-open"></i> Files</a>       
+      <a href="settings.html"><i class="fa fa-gear"></i> Settings</a>     
+    </nav>   
+  </aside>    
+
+  <!-- Main Content Area -->   
+  <div class="main-area">     
+    <!-- Top Bar -->     
+    <header class="top-bar">         
+      <div class="breadcrumb">             
+        <h2><a href="studentmain.html">Students</a></h2>             
+        <span class="breadcrumb-separator">→</span>             
+        <h2><span>Student Detail</span></h2>         
+      </div>         
+      <div class="button-group">                    
+        <a href="addstudents.html" class="btn">Add Students</a>         
+      </div>     
+    </header>       
+
+    <main class="main-content">         
+
+
+      <div id="student-detail-container">              
+        <!-- 视图模式 -->
+        <div id="view-mode" class="left-info">
+          <h3 id="student-fullname">Loading...</h3>
+          <p><strong>First Name:</strong> <span id="first-name">Loading...</span></p>
+          <p><strong>Last Name:</strong> <span id="last-name">Loading...</span></p>
+          <p><strong>OEN Number:</strong> <span id="oen">Loading...</span></p>
+          <p><strong>Student Number:</strong> <span id="student-number">Loading...</span></p>
+          <p><strong>Status:</strong> <span id="status">Loading...</span></p>
+          <p><strong>Grade:</strong> <span id="grade">Loading...</span></p>
+          <p><strong>Date of Birth:</strong> <span id="dob">Loading...</span></p>
+          <p><strong>Enrollment Date:</strong> <span id="enroll-date">Loading...</span></p>
+          <p><strong>Graduation Date:</strong> <span id="grad-date">Loading...</span></p>
+          <p><strong>Volunteer Hours:</strong> <span id="volunteer">Loading...</span></p>
+          <p><strong>Address:</strong> <span id="address">Loading...</span></p>
+          <p><strong>Remark:</strong> <span id="remark">Loading...</span></p>
+                           
+          <div class="button-group action-buttons">                 
+            <button class="btn danger" id="edit-button"><i class="fa fa-pen"></i> Edit Info</button>                 
+            <button class="btn danger" id="delete-button"><i class="fa fa-trash"></i> Delete Student</button>             
+          </div>          
+        </div>
+        
+        <!-- 编辑模式 -->
+        <div id="edit-mode" class="left-info" style="display:none">
+          <h3>Edit Student Information</h3>
+          <form id="edit-student-form">
+            <div class="form-group">
+              <label for="edit-first-name">First Name:</label>
+              <input type="text" id="edit-first-name" name="first_name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="edit-last-name">Last Name:</label>
+              <input type="text" id="edit-last-name" name="last_name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="edit-oen">OEN Number:</label>
+              <input type="text" id="edit-oen" name="OEN" readonly>
+            </div>
+            
+            <div class="form-group">
+              <label for="edit-student-number">Student Number:</label>
+              <input type="text" id="edit-student-number" name="student_number" maxlength="12" pattern="[0-9]{12}">
+            </div>
+
+            <div class="form-group">
+              <label for="edit-status">Status:</label>
+              <select id="edit-status" name="graduation_status">
+                <option value="IN_PROGRESS">Currently Enrolled</option>
+                <option value="GRADUATED">Graduated</option>
+                <option value="Withdrawn">Withdrawn</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="edit-grade">Grade:</label>
+              <input type="text" id="edit-grade" name="grade">
+            </div>
+            
+            <div class="form-group">
+              <label for="edit-dob">Date of Birth:</label>
+              <input type="date" id="edit-dob" name="dob">
+            </div>
+            
+            <div class="form-group">
+              <label for="edit-enrollment">Enrollment Date:</label>
+              <input type="date" id="edit-enrollment" name="enrollment_date">
+            </div>
+            
+            <div class="form-group">
+              <label for="edit-graduation">Graduation Date:</label>
+              <input type="date" id="edit-graduation" name="expected_graduation_date">
+            </div>
+            
+            <div class="form-group">
+              <label for="edit-volunteer">Volunteer Hours:</label>
+              <input type="number" id="edit-volunteer" name="volunteer_hours" min="0">
+            </div>
+            
+            <div class="form-group">
+              <label for="edit-address">Address:</label>
+              <input type="text" id="edit-address" name="address">
+            </div>
+            
+
+            <div class="form-group">
+              <label for="edit-remark">Remark:</label>
+              <textarea id="edit-remark" name="remark" rows="3"></textarea>
+            </div>
+  
+            <div class="button-group action-buttons">                 
+              <button type="submit" class="btn primary"><i class="fa fa-save"></i> Save Changes</button>                 
+              <button type="button" class="btn secondary" id="cancel-edit"><i class="fa fa-times"></i> Cancel</button>             
+            </div>
+          </form>
+        </div>
+                  
+        <div class="right-actions">                 
+         
+          <a href="#">Edit Report Card</a>           
+          <a href="#" id="view-all-courses-link">View All Courses</a>                                
+          <a id="view-ost-link" href="#">View Ontario Student Transcript</a>                 
+          <a id="final-ost-link" href="#">View Ontario Student Transcript - Final</a>                
+          <a id="manage-file-link" href="#">Manage Files</a>          
+          <a href="#">Check User Activities</a>             
+        </div>          
+      </div>     
+    </main>    
+  </div> 
+  <script>
+// 当页面加载时，设置"View All Courses"链接
+document.addEventListener('DOMContentLoaded', function() {
+  // 现有的学生详情加载代码...
+  
+  // 获取URL中的OEN参数
+  const urlParams = new URLSearchParams(window.location.search);
+  const oen = urlParams.get('oen');
+  
+  // 设置"View All Courses"链接
+  const viewCoursesLink = document.getElementById('view-all-courses-link');
+  if (viewCoursesLink && oen) {
+    viewCoursesLink.href = `studentallcourse.html?oen=${oen}`;
+  }
+
+});
+</script>
+</body> 
+</html>

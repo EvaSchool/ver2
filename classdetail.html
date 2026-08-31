@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course Detail - Classes</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="sidebar-logo">
+      <img src="logo.png" alt="Logo" />
+      <h1>Emerald Valley Academy</h1>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html"><i class="fa fa-house"></i> Dashboard</a>
+      <a href="studentmain.html"><i class="fa fa-user-graduate"></i> Students</a>
+      <a href="classmain.html" class="active"><i class="fa fa-chalkboard-teacher"></i> Classes</a>
+      <a href="filesmain.html"><i class="fa fa-folder-open"></i> Files</a>
+      <a href="settings.html"><i class="fa fa-gear"></i> Settings</a>
+    </nav>
+  </aside>
+ 
+  <!-- Main Content Area -->
+  <div class="main-area">
+    <!-- Top Bar -->
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <h2 class="course-title">Course Detail</h2>
+      </div>
+    </header>
+ 
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="course-detail-container">
+        <div class="loading-state" id="initial-loading">
+          <i class="fa fa-spinner fa-spin"></i>
+          <p>加载课程信息中...</p>
+        </div>
+ 
+        <div class="course-content" style="display: none;">
+          <!-- View Mode -->
+          <div id="course-view-mode">
+            <div class="course-info-grid">
+
+              <div class="info-card full-width">
+                <a href="#" id="show-students-link" class="enrolled-students-btn" onclick="showEnrolledStudents()">
+                  <i class="fa fa-users"></i> Show All Students Enrolled
+                </a>
+              </div>
+
+              <!-- Course Name -->
+              <div class="info-card">
+                <div class="info-label"><i class="fa fa-book"></i> Course Name</div>
+                <div class="info-value" id="course-name">Loading...</div>
+              </div>
+ 
+              <!-- Course Code -->
+              <div class="info-card">
+                <div class="info-label"><i class="fa fa-code"></i> Course Code</div>
+                <div class="info-value" id="course-code">Loading...</div>
+              </div>
+ 
+              <!-- Level -->
+              <div class="info-card">
+                <div class="info-label"><i class="fa fa-layer-group"></i> Level</div>
+                <div class="info-value" id="course-level">Loading...</div>
+              </div>
+ 
+              <!-- Credit -->
+              <div class="info-card">
+                <div class="info-label"><i class="fa fa-star"></i> Credit</div>
+                <div class="info-value" id="course-credit">Loading...</div>
+              </div>
+ 
+              <!-- Compulsory -->
+              <div class="info-card">
+                <div class="info-label"><i class="fa fa-exclamation-circle"></i> Compulsory</div>
+                <div class="info-value" id="course-compulsory">Loading...</div>
+              </div>
+ 
+              <!-- Description -->
+              <div class="info-card description-card">
+                <div class="info-label"><i class="fa fa-align-left"></i> Description</div>
+                <div class="info-value description-text" id="course-description">Loading...</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edit Mode (hidden by default) -->
+          <div id="course-edit-mode" style="display: none;">
+            <div class="course-info-grid">
+              <!-- Course Name -->
+              <div class="info-card">
+                <div class="info-label"><i class="fa fa-book"></i> Course Name</div>
+                <div class="form-group">
+                  <input type="text" id="edit-course-name" class="form-control" />
+                </div>
+              </div>
+ 
+              <!-- Course Code -->
+              <div class="info-card">
+                <div class="info-label"><i class="fa fa-code"></i> Course Code</div>
+                <div class="form-group">
+                  <input type="text" id="edit-course-code" class="form-control" />
+                </div>
+              </div>
+ 
+              <!-- Level -->
+              <div class="info-card">
+                <div class="info-label"><i class="fa fa-layer-group"></i> Level</div>
+                <div class="form-group">
+                  <select id="edit-course-level" class="form-control">
+                    <option value="9">Grade 9</option>
+                    <option value="10">Grade 10</option>
+                    <option value="11">Grade 11</option>
+                    <option value="12">Grade 12</option>
+                  </select>
+                </div>
+              </div>
+ 
+              <!-- Credit -->
+              <div class="info-card">
+                <div class="info-label"><i class="fa fa-star"></i> Credit</div>
+                <div class="form-group">
+                  <input type="number" id="edit-course-credit" class="form-control" min="0" max="10" step="0.5" />
+                </div>
+              </div>
+ 
+              <!-- Compulsory -->
+              <div class="info-card">
+                <div class="info-label"><i class="fa fa-exclamation-circle"></i> Compulsory</div>
+                <div class="form-group">
+                  <select id="edit-course-compulsory" class="form-control">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
+              </div>
+ 
+              <!-- Description -->
+              <div class="info-card description-card">
+                <div class="info-label"><i class="fa fa-align-left"></i> Description</div>
+                <div class="form-group">
+                  <textarea id="edit-course-description" class="form-control" rows="4"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- View Mode Controls -->
+      <div id="view-mode-controls" style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
+        <!-- Go Back 在左边 -->
+        <div class="go-back-section">
+          <button class="btn secondary" onclick="window.history.back()">
+            <i class="fa fa-arrow-left"></i> Go Back
+          </button>
+        </div>
+        <!-- Edit Class Info 在右边 -->
+        <div id="edit-controls-view" class="edit-controls">
+          <button id="edit-class-info-btn" class="btn">
+            <i class="fa fa-pen"></i> Edit Class Info
+          </button>
+        </div>
+      </div>
+
+      <!-- Edit Mode Controls (hidden by default) -->
+      <div id="edit-controls-edit" class="edit-controls" style="display: none; text-align: right; margin-top: 2rem;">
+        <button id="save-changes-btn" class="btn">
+          <i class="fa fa-save"></i> Save Changes
+        </button>
+        <button id="cancel-edit-btn" class="btn secondary">
+          <i class="fa fa-times"></i> Cancel
+        </button>
+      </div>
+ 
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student All Courses</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <script defer src="script.js"></script>
+  <style>
+    /* 表格滚动容器 */
+    .table-scroll-container {
+      overflow-x: auto;
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: white;
+    }
+
+    /* 确保表格最小宽度 */
+    .student-table {
+      min-width: 1200px;
+      white-space: nowrap;
+    }
+
+    /* 滚动条样式 */
+    .table-scroll-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .table-scroll-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    .table-scroll-container::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 4px;
+    }
+
+    .table-scroll-container::-webkit-scrollbar-thumb:hover {
+      background: #a8a8a8;
+    }
+
+    /* 固定表格列宽度以防止内容挤压 */
+    .student-table th,
+    .student-table td {
+      min-width: 100px;
+      padding: 12px 8px;
+    }
+
+    .student-table th:first-child,
+    .student-table td:first-child {
+      min-width: 120px; /* Course Code */
+    }
+
+    .student-table th:nth-child(2),
+    .student-table td:nth-child(2) {
+      min-width: 140px; /* Status */
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="sidebar-logo">
+      <img src="logo.png" alt="Logo"/>
+      <h1>Emerald Valley Academy</h1>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html"><i class="fa fa-house"></i> Dashboard</a>
+      <a href="studentmain.html" class="active"><i class="fa fa-user-graduate"></i> Students</a>
+      <a href="classmain.html"><i class="fa fa-chalkboard-teacher"></i> Classes</a>
+      <a href="filesmain.html"><i class="fa fa-folder-open"></i> Files</a>
+      <a href="settings.html"><i class="fa fa-gear"></i> Settings</a>
+    </nav>
+  </aside>
+ 
+  <!-- Main Area -->
+  <div class="main-area">
+    <header class="top-bar">
+      <h2><span id="student-name-title">Loading Student Courses...</span></h2>
+      <div class="button-group">
+        <a href="addstudents.html" class="btn">Add Students</a>
+      </div>
+    </header>
+ 
+    <main class="main-content">
+ 
+      <!-- PLAR Info Section -->
+      <section class="plar-info">
+        <h3>1. Student PLAR Information</h3>
+        
+        <!-- View Mode -->
+        <div id="plar-view-mode">
+          <p><strong>Does the student has PLAR?</strong> <span id="plar-info">Loading...</span></p>
+          <p><strong>Is PLAR Evaluated at EVA?</strong> <span id="plar-evaluated">Loading...</span></p>
+          <p><strong>PLAR Evaluation Date:</strong> <span id="plar-date">Loading...</span></p>
+          <p><strong>Total PLAR Credits:</strong> <span id="plar-total">Loading...</span></p>
+          <p><strong>Total PLAR Compulsory Credits:</strong> <span id="plar-compulsory">Loading...</span></p>
+        </div>
+        
+        <!-- Edit Mode (hidden by default) -->
+        <!-- 在PLAR Info Section的编辑模式部分，确保select选项正确 -->
+        <div id="plar-edit-mode" style="display: none;">
+          <div class="form-group">
+            <label for="edit-plar-info">Does the student have PLAR?</label>
+            <select id="edit-plar-info">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="edit-plar-evaluated">Is PLAR Evaluated at EVA?</label>
+              <select id="edit-plar-evaluated">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+          </div>
+          <div class="form-group">
+            <label for="edit-plar-date">PLAR Evaluation Date:</label>
+            <input type="date" id="edit-plar-date" />
+          </div>
+          <div class="form-group">
+            <label for="edit-plar-total">Total PLAR Credits:</label>
+            <input type="number" id="edit-plar-total" />
+          </div>
+          <div class="form-group">
+            <label for="edit-plar-compulsory">Total PLAR Compulsory Credits:</label>
+            <input type="number" id="edit-plar-compulsory" />
+          </div>
+        </div>
+
+        <div class="button-group action-buttons">
+          <button class="btn danger" id="edit-info-btn"><i class="fa fa-pen"></i> Edit PLAR Info</button>
+        </div>
+      </section>
+ 
+      <!-- Courses Table -->
+      <section class="student-courses">
+        <div class="table-scroll-container">
+          <table class="student-table">
+            <thead>
+              <tr>
+                <th>Course Code</th>
+                <th>Status</th>
+                <th>Enrollment Date</th>
+                <th>Completion Date</th>
+                <th>Local</th>
+                <th>Compulsory</th>
+                <th>Midterm Grade</th>
+                <th>Final Grade</th>
+                <th>Midterm Report Card</th>
+                <th>Final Report Card</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="course-table-body">
+              <!-- Dynamic course rows will go here -->
+            </tbody>
+          </table>
+        </div>
+        <br><br>
+        <!-- Add Course Button -->
+        <div class="add-course-section" style="text-align: center;" >
+          <button id="add-course-btn" class="btn secondary" >
+            <i class="fa fa-plus"></i> Add Another Course
+          </button>
+        </div>
+
+        <!-- Hidden Course Entry Table (shown after clicking "Add Course") -->
+        <div id="manual-course-container" style="display: none;">
+          <div class="table-scroll-container">
+            <table class="student-table">
+              <thead id="manual-course-head">
+                <!-- 表头将通过 script.js 动态添加 -->
+              </thead>
+              <tbody id="manual-course-body">
+                <!-- 新增课程行将插入这里 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <br><br>
+        <!-- View Mode Controls -->
+        <div id="view-mode-controls" style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
+          <div class="go-back-section">
+            <button class="btn secondary" onclick="window.history.back()">
+              <i class="fa fa-arrow-left"></i> Go Back
+            </button>
+          </div>
+
+          <div id="edit-controls-view" class="edit-controls">
+            <button id="edit-classes-btn" class="btn">
+              <i class="fa fa-pen"></i> Edit Classes 
+            </button>
+          </div>
+        </div>
+        <!-- Edit Mode Controls -->
+        <div id="edit-controls-edit" class="edit-controls" style="display: none; text-align: right; margin-top: 2rem;">
+          <button id="save-changes-btn" class="btn">
+            <i class="fa fa-save"></i> Save Changes
+          </button>
+          <button id="cancel-edit-btn" class="btn secondary">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+        </div>
+
+      </section>
+ 
+    </main>
+  </div>
+  
+  <!-- Add Course Modal (hidden by default) -->
+  <div id="add-course-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add New Course</h3>
+        <button class="modal-close" id="close-add-course-modal">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="add-course-form">
+          <div class="form-group">
+            <label for="new-course-code">Course Code:</label>
+            <input type="text" id="new-course-code" required />
+          </div>
+          <div class="form-group">
+            <label for="new-course-status">Status:</label>
+            <select id="new-course-status">
+              <option value="Completed">Completed</option>
+              <option value="Withdrawn">Withdrawn</option>
+              <option value="In Progress">In Progress</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="new-enrollment-date">Enrollment Date:</label>
+            <input type="date" id="new-enrollment-date" />
+          </div>
+          <div class="form-group">
+            <label for="new-completion-date">Completion Date:</label>
+            <input type="date" id="new-completion-date" />
+          </div>
+          <div class="form-group">
+            <label for="new-course-local">Is Local Course:</label>
+            <select id="new-course-local">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="new-course-compulsory">Is Compulsory Course:</label>
+            <select id="new-course-compulsory">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="new-midterm-grade">Midterm Grade:</label>
+            <input type="text" id="new-midterm-grade" />
+          </div>
+          <div class="form-group">
+            <label for="new-final-grade">Final Grade:</label>
+            <input type="text" id="new-final-grade" />
+          </div>
+          <div class="form-group">
+            <label for="new-midterm-report">Midterm Report Card:</label>
+            <input type="file" id="new-midterm-report" accept=".pdf,.doc,.docx" />
+          </div>
+          <div class="form-group">
+            <label for="new-final-report">Final Report Card:</label>
+            <input type="file" id="new-final-report" accept=".pdf,.doc,.docx" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="save-new-course" class="btn">Add Course</button>
+        <button type="button" id="cancel-new-course" class="btn secondary">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

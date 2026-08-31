@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Student</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="sidebar-logo">
+      <img src="logo.png" alt="Logo" />
+      <h1>Emerald Valley Academy</h1>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html"><i class="fa fa-house"></i> Dashboard</a>
+      <a href="studentmain.html" class="active"><i class="fa fa-user-graduate"></i> Students</a>
+      <a href="classmain.html"><i class="fa fa-chalkboard-teacher"></i> Classes</a>
+      <a href="filesmain.html"><i class="fa fa-folder-open"></i> Files</a>
+      <a href="settings.html"><i class="fa fa-gear"></i> Settings</a>
+    </nav>
+  </aside>
+
+  <!-- Main Area -->
+  <div class="main-area">
+    <header class="top-bar">
+      <h2>Add Students</h2>
+    </header>
+
+    <main class="main-content">
+        <!-- 1. 表单ID已修改为 addStudentForm -->
+        <form class="student-form" id="addStudentForm">
+            <h3>Part I: Student Personal Information</h3>
+          
+            <!-- 2. 所有输入字段都有正确的 name 属性 -->
+            <div class="form-row">
+              <input type="text" name="firstName" placeholder="First Name" required />
+              <input type="text" name="lastName" placeholder="Last Name" required />
+            </div>
+          
+            <div class="form-row">
+              <input type="text" name="oen" placeholder="OEN e.g.123456789" />
+              <input type="text" name="studentNumber" placeholder="Student Number" />
+            </div>
+          
+            <div class="form-row">
+              <input type="text" name="studentAddress" placeholder="Student Address" />
+            </div>
+          
+            <div class="form-row">
+              <input type="text" name="dobYear" placeholder="DOB: Year" />
+              <input type="text" name="dobMonth" placeholder="DOB: Month" />
+              <input type="text" name="dobDate" placeholder="DOB: Date" />
+            </div>
+          
+            <div class="form-row">
+              <input type="text" name="enrollYear" placeholder="Enrollment Year" />
+              <input type="text" name="enrollMonth" placeholder="Enrollment Month" />
+              <input type="text" name="enrollDate" placeholder="Enrollment Date" />
+            </div>
+          
+            <div class="form-row">
+              <input type="text" name="gradYear" placeholder="Graduation Year" />
+              <input type="text" name="gradMonth" placeholder="Graduation Month" />
+              <input type="text" name="gradDate" placeholder="Graduation Date" />
+            </div>
+            
+            <div class="form-row">
+              <input type="text" name="grade" placeholder="Grade" />
+              <input type="text" name="volunteerHours" placeholder="Volunteer Hours" />
+              <input type="text" name="remark" placeholder="Remark" />
+            </div>
+          
+        <!-- Part II: Student Academic Information – Completed Courses 的改进版本 -->
+
+            <h3>Part II: Student Academic Information – Completed Courses</h3>
+
+            <h4>1. Student PLAR Information</h4>
+            <br>
+            <div class="form-row">
+              <select name="PLARexist" id="PLARexist" required>
+                <option value="">Student has PLAR?</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+              <select name="localPLAR" id="localPLAR">
+                <option value="">PLAR done at EVA?</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+              <input type="text" name="plaryear" placeholder="PLAR Year" />
+              <input type="text" name="plarmonth" placeholder="PLAR Month" />
+              <input type="text" name="plardate" placeholder="PLAR Date" />
+              <input type="number" name="plarTotalCredits" placeholder="Total PLAR Credits" min="0" step="0.5"/>
+              <input type="number" name="plarCompulsoryCredits" placeholder="Compulsory PLAR Credits" min="0" step="0.5"/>
+            </div>
+
+            <h4>2. Student Completed Courses</h4>
+            <br>
+            <div class="table-container">
+              <table class="course-table completed-course-table">
+                <thead>
+                  <tr>
+                    <th>Compulsory</th>
+                    <th>Local Course</th>
+                    <th>Start Year</th>
+                    <th>Start Month</th>
+                    <th>Start Date</th>
+                    <th>Completion Year</th>
+                    <th>Completion Month</th>
+                    <th>Completion Date</th>
+                    <th>Course Code</th>
+                    <th>Midterm Grade</th>
+                    <th>Final Grade</th>
+                    <th>Action</th> <!-- 新增删除列 -->
+                  </tr>
+                </thead>
+                <tbody id="coursesTableBody">
+                  <tr>
+                   <td>
+                    <select name="compulsory[]">
+                      <option value="">Compulsory?</option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                   </td>
+                  <td>
+                    <select name="localCourse[]">
+                      <option value="">Local?</option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                   </td>
+                  <td><input type="text" name="startYear[]" placeholder="YYYY" maxlength="4" /></td>
+                  <td><input type="text" name="startMonth[]" placeholder="JAN or 01" /></td>
+                  <td><input type="text" name="startDate[]" placeholder="DD" maxlength="2" /></td>
+                  <td><input type="text" name="completionYear[]" placeholder="YYYY" maxlength="4" /></td>
+                  <td><input type="text" name="completionMonth[]" placeholder="JAN or 01" /></td>
+                  <td><input type="text" name="completionDate[]" placeholder="DD" maxlength="2" /></td>
+                  <td><input type="text" name="courseCode[]" placeholder="e.g. ENG4U" /></td>
+                  <td><input type="text" name="midtermGrade[]" placeholder="%" /></td>
+                  <td><input type="text" name="finalGrade[]" placeholder="%" /></td>
+                  <td>
+                    <button type="button" class="btn-remove-row" onclick="removeRow(this)" style="background: #ff4444; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Remove</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button type="button" class="btn secondary" id="addCourseBtn">+ Add another Course</button>
+   
+<!-- 在现有的 Part III: Current Courses 表格中添加 Remove 按钮列 -->
+
+            <h3>Part III: Student Academic Information – Current Courses</h3>
+            <div class="table-container">
+              <table class="course-table current-course-table">
+                <thead>
+                  <tr>
+                    <th>Compulsory</th>
+                    <th>Local Course</th>
+                    <th>Start Year</th>
+                    <th>Start Month</th>
+                    <th>Start Date</th>
+                    <th>Course Code</th>
+                    <th>Midterm Grade (if applicable)</th>
+                    <th>Action</th> <!-- 新增删除列 -->
+                  </tr>
+                </thead>
+                <tbody id="currentCoursesTableBody">
+                  <tr>
+                    <td>
+                      <select name="current_compulsory[]">
+                        <option value="">Compulsory?</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                      </select>
+                    </td>
+                    <td>
+                      <select name="current_localCourse[]">
+                        <option value="">Local?</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                      </select>
+                    </td>
+                    <td><input type="text" name="current_year[]" placeholder="YYYY" maxlength="4" /></td>
+                    <td><input type="text" name="current_month[]" placeholder="JAN or 01" /></td>
+                    <td><input type="text" name="current_startDate[]" placeholder="DD" maxlength="2" /></td>
+                    <td><input type="text" name="current_courseCode[]" placeholder="e.g. ENG4U" /></td>
+                    <td><input type="text" name="current_grade[]" placeholder="%" /></td>
+                    <td>
+                      <button type="button" class="btn-remove-row" onclick="removeCurrentCourseRow(this)" style="background: #ff4444; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Remove</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <button type="button" class="btn secondary" id="addCurrentCourseBtn">+ Add another Current Course</button>
+
+        <br /><br />
+        <div class="form-buttons">
+            <div class="left-buttons">
+              <button type="button" class="btn secondary" id="goBackBtn">Go Back</button>
+            </div>
+            <div class="right-buttons">
+              <!-- 3. 按钮有正确的类型和ID -->
+              <button type="submit" class="btn">Submit</button>
+              <button type="button" class="btn" id="saveAndAddAnotherBtn">Save & Add Another Student</button>
+            </div>
+          </div>
+          
+      </form>
+    </main>
+  </div>
+
+  <!-- 4. script.js 已经在 head 中引入 -->
+</body>
+</html>
